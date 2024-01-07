@@ -1,0 +1,26 @@
+local util = require 'xlua.util'
+
+local UnityEngine = CS.UnityEngine
+local Vector3 = CS.UnityEngine.Vector3
+local Vector2 = CS.UnityEngine.Vector2
+local Time = CS.UnityEngine.Time
+local DOTween = CS.DG.Tweening.DOTween
+
+local speed_pipes = 5 -- 管子移动的速度
+local leftEdge = nil -- 用于判断屏幕左边缘
+
+function Awake()
+    print("lua Awake...")
+
+end
+
+function Start()
+    print("lua Start...")
+    leftEdge = UnityEngine.Camera.main:ScreenToWorldPoint(Vector3.zero).x - 1 -- 将屏幕点转换为世界坐标，并向左偏移1个单位（一般情况下1个单位就好）
+end
+
+function Update()
+    -- 对预制体进行操作
+    prefab.transform.position = prefab.transform.position + Vector3.left * speed_pipes * Time.deltaTime
+    if prefab.transform.position.x < leftEdge then GameObject = nil end
+end
